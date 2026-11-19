@@ -1,649 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Mathi Srimurthinadh | Portfolio</title>
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathi Srimurthinadh | Portfolio</title>
+<meta name="description" content="Portfolio of Mathi Srimurthinadh, B.Tech AI & ML student, Python and web developer.">
+<meta name="theme-color" content="#070b14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b14;--bg2:#0d1424;--text:#e8edf7;--mute:#93a0b8;--a:#4fd1ff;--b:#8b7bff;--c:#3ee6b5;--line:rgba(160,180,220,.14);--glass:rgba(16,24,44,.55);--mx:50vw;--my:30vh;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px;color-scheme:dark}
+body{background:var(--bg);color:var(--text);font:400 16px/1.7 Inter,system-ui,sans-serif;overflow-x:hidden;opacity:0;transition:opacity .8s}
+body.ready{opacity:1}
+h1,h2,h3,.logo{font-family:Sora,Inter,system-ui,sans-serif;line-height:1.15}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+/* background layers */
+#bg,.grid,.glow,.orb{position:fixed;inset:0;pointer-events:none}
+#bg{z-index:-4;width:100%;height:100%}
+.grid{z-index:-3;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 75%);animation:gridmove 30s linear infinite}
+@keyframes gridmove{to{background-position:56px 56px,56px 56px}}
+.glow{z-index:-2;background:radial-gradient(520px circle at var(--mx) var(--my),rgba(79,209,255,.10),transparent 70%)}
+.orb{z-index:-5;width:46vmax;height:46vmax;inset:auto;border-radius:50%;filter:blur(90px);opacity:.28;animation:drift 22s ease-in-out infinite alternate}
+.o1{background:var(--b);top:-12vmax;left:-10vmax}.o2{background:var(--a);bottom:-16vmax;right:-12vmax;animation-delay:-9s}
+@keyframes drift{to{transform:translate(6vmax,4vmax) scale(1.12)}}
+/* cursor */
+.cur,.dot{position:fixed;top:0;left:0;pointer-events:none;z-index:200;border-radius:50%;opacity:0;transition:opacity .3s}
+.cur{width:34px;height:34px;border:1px solid var(--a);margin:-17px 0 0 -17px;transition:width .25s,height .25s,margin .25s,opacity .3s,background .25s}
+.dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--a)}
+.cur.big{width:60px;height:60px;margin:-30px 0 0 -30px;background:rgba(79,209,255,.08)}
+@media(hover:hover) and (pointer:fine){body.has-cur,body.has-cur a,body.has-cur button{cursor:none}.has-cur .cur,.has-cur .dot{opacity:1}}
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,5vw);background:rgba(7,11,20,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:1.35rem;letter-spacing:.04em}
+.logo span{color:var(--a)}
+.links{display:flex;gap:30px;list-style:none}
+.links a{position:relative;color:var(--mute);font-size:.93rem;padding:6px 0;transition:color .3s}
+.links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:linear-gradient(90deg,var(--a),var(--b));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.links a:hover,.links a.on{color:var(--text)}
+.links a:hover::after,.links a.on::after{transform:scaleX(1)}
+.burger{display:none;background:none;border:0;width:40px;height:40px;position:relative}
+.burger i{position:absolute;left:9px;right:9px;height:2px;background:var(--text);transition:.3s}
+.burger i:nth-child(1){top:14px}.burger i:nth-child(2){top:19px}.burger i:nth-child(3){top:24px}
+.burger.x i:nth-child(1){top:19px;transform:rotate(45deg)}.burger.x i:nth-child(2){opacity:0}.burger.x i:nth-child(3){top:19px;transform:rotate(-45deg)}
+.bar{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--a),var(--b))}
+/* layout */
+section{padding:110px max(24px,6vw);max-width:1240px;margin:auto}
+.head{margin-bottom:54px}
+.head h2{font-size:clamp(2rem,4vw,2.9rem);font-weight:700}
+.head p{color:var(--mute);margin-top:10px;max-width:56ch}
+.grad{background:linear-gradient(100deg,var(--a),var(--b),var(--c),var(--a));background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 8s linear infinite}
+@keyframes flow{to{background-position:250% 0}}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,transform .25s}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--ang,0deg),transparent 0 60%,var(--a),var(--b),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;animation:spin 5s linear infinite;pointer-events:none}
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+.glass:hover{border-color:rgba(79,209,255,.35);box-shadow:0 18px 50px -20px rgba(79,209,255,.35)}
+.glass:hover::before{opacity:1}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;font-weight:500;font-size:.95rem;border:1px solid var(--line);background:rgba(255,255,255,.03);transition:box-shadow .3s,border-color .3s,background .3s;will-change:transform}
+.btn:hover{border-color:var(--a);box-shadow:0 0 26px -4px rgba(79,209,255,.5)}
+.btn.p{background:linear-gradient(110deg,var(--a),var(--b));color:#05101c;font-weight:600;border:0}
+.btn.p:hover{box-shadow:0 0 34px -2px rgba(139,123,255,.65)}
+/* hero */
+#home{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;padding-top:130px;position:relative}
+.hi{color:var(--c);font-size:.95rem;margin-bottom:14px}
+#home h1{font-size:clamp(2.5rem,6.2vw,4.7rem);font-weight:800;letter-spacing:-.02em;text-shadow:0 0 40px rgba(79,209,255,.25)}
+.role{font:600 clamp(1.05rem,2vw,1.4rem)/1.4 Sora,sans-serif;margin:20px 0;min-height:2.1em;color:var(--a)}
+.role::after{content:"";display:inline-block;width:2px;height:1.1em;background:var(--a);margin-left:4px;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.intro{color:var(--mute);max-width:52ch;margin-bottom:34px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.pic{perspective:900px;justify-self:center}
+.frame{width:min(380px,72vw);aspect-ratio:1/1;border-radius:50%;padding:6px;background:linear-gradient(140deg,var(--a),var(--b),var(--c));box-shadow:0 30px 80px -30px rgba(79,209,255,.5);animation:float 6s ease-in-out infinite;transform-style:preserve-3d;transition:transform .2s}
+.frame img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;background:var(--bg2)}
+@keyframes float{50%{margin-top:-16px}}
+.scroll{position:absolute;bottom:28px;left:50%;translate:-50% 0;width:24px;height:40px;border:2px solid var(--mute);border-radius:14px;opacity:.7}
+.scroll::after{content:"";position:absolute;left:50%;top:7px;width:4px;height:8px;margin-left:-2px;border-radius:3px;background:var(--a);animation:wheel 1.8s infinite}
+@keyframes wheel{0%{opacity:1;transform:none}100%{opacity:0;transform:translateY(14px)}}
+/* about */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start}
+.about p{color:var(--mute);margin-bottom:16px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fact{padding:20px}.fact small{color:var(--mute)}.fact b{display:block;font-family:Sora,sans-serif;margin-top:4px;font-size:.98rem}
+/* timeline */
+.tl{position:relative;margin-left:14px;padding-left:34px}
+.tl::before,.tl i{content:"";position:absolute;left:0;top:0;width:2px;background:var(--line)}
+.tl::before{bottom:0}
+.tl i{background:linear-gradient(var(--a),var(--b));height:0;box-shadow:0 0 12px var(--a)}
+.step{position:relative;padding:24px 28px;margin-bottom:24px}
+.step::after{content:"";position:absolute;left:-41px;top:32px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--mute);transition:.4s}
+.step.in::after{border-color:var(--a);background:var(--a);box-shadow:0 0 14px var(--a)}
+.step h3{font-size:1.15rem}.step p{color:var(--mute);font-size:.95rem}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.tag{padding:3px 12px;border-radius:999px;font-size:.8rem;border:1px solid var(--line);color:var(--a);background:rgba(79,209,255,.06)}
+/* skills */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.skill{padding:26px}
+.ico{font-size:2rem;display:inline-block;transition:transform .4s}
+.skill:hover .ico{transform:translateY(-4px) rotate(-8deg) scale(1.12)}
+.skill h3{font-size:1.1rem;margin:12px 0 2px}.skill p{color:var(--mute);font-size:.9rem}
+.pg{height:5px;border-radius:5px;background:rgba(255,255,255,.08);margin-top:18px;overflow:hidden}
+.pg b{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,var(--a),var(--b));transition:width 1.4s cubic-bezier(.2,.7,.2,1) .3s}
+.in .pg b{width:var(--w)}
+/* projects */
+.proj{display:flex;flex-direction:column;transform-style:preserve-3d}
+.vis{height:150px;overflow:hidden;position:relative;border-bottom:1px solid var(--line)}
+.vis div{position:absolute;inset:0;display:grid;place-items:center;font:800 2.2rem Sora,sans-serif;letter-spacing:.05em;background:radial-gradient(circle at 30% 20%,rgba(79,209,255,.35),transparent 55%),radial-gradient(circle at 80% 90%,rgba(139,123,255,.4),transparent 55%),var(--bg2);transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.proj:hover .vis div{transform:scale(1.14)}
+.pb{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.pb h3{font-size:1.2rem}.pb p{color:var(--mute);font-size:.93rem;flex:1}
+.pb .btn{align-self:flex-start;padding:9px 20px;font-size:.88rem}
+/* certs */
+.cert{padding:24px;display:flex;flex-direction:column;gap:6px}
+.cert .ico{font-size:1.8rem}
+.cert h3{font-size:1.02rem;margin-top:8px}.cert p{color:var(--mute);font-size:.88rem;margin-bottom:14px;flex:1}
+.cert .btn{align-self:flex-start;padding:8px 18px;font-size:.85rem}
+.res{text-align:center;padding:52px 28px}
+.res h3{font-size:1.5rem;margin:10px 0}.res p{color:var(--mute);max-width:56ch;margin:0 auto 26px}
+.res .cta{justify-content:center}
+/* contact */
+#contact{text-align:center}
+#contact .head p{margin-inline:auto}
+.cc{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;max-width:960px;margin:0 auto 40px}
+.ct{padding:30px 22px;display:block;word-break:break-word}
+.ct .ico{font-size:2rem}.ct h3{font-size:1.05rem;margin:10px 0 4px}.ct span{color:var(--mute);font-size:.88rem}
+.thanks{color:var(--mute)}
+footer{border-top:1px solid var(--line);text-align:center;padding:44px 24px;color:var(--mute);font-size:.9rem;background:rgba(7,11,20,.6)}
+footer h3{color:var(--text);font-size:1.15rem;margin-bottom:4px}
+.fl{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+.fl a:hover{color:var(--a)}
+/* extra effects */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
+.btn:hover::before{transform:translateX(120%)}
+.btn:not(.p)::after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(110deg,rgba(79,209,255,.22),rgba(139,123,255,.22));transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.btn:not(.p):hover::after{transform:scaleX(1)}
+.btn:active{filter:brightness(1.15)}
+.btn.p{animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 28px -6px rgba(139,123,255,.55)}}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);width:10px;height:10px;margin:-5px 0 0 -5px;pointer-events:none;animation:rip .65s ease-out forwards}
+@keyframes rip{to{transform:scale(22);opacity:0}}
+.cta .btn{opacity:0;scale:.82;transition:opacity .6s,scale .7s cubic-bezier(.3,1.6,.5,1),box-shadow .3s,border-color .3s,background .3s}
+.cta.in .btn{opacity:1;scale:1}
+.cta.in .btn:nth-child(2){transition-delay:.15s,.15s,0s,0s,0s}
+.btn:hover{scale:1.05}
+.glass{background-image:radial-gradient(320px circle at var(--px,-999px) var(--py,-999px),rgba(79,209,255,.11),transparent 65%)}
+.step{overflow:visible}
+.head h2{position:relative;display:inline-block;padding-bottom:12px}
+.head h2::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;border-radius:3px;background:linear-gradient(90deg,var(--a),var(--b));transform:scaleX(0);transform-origin:left;transition:transform 1s cubic-bezier(.2,.7,.2,1) .35s}
+#contact .head h2::after{left:0}
+.rv.in .head h2::after,.head.in h2::after{transform:scaleX(.35)}
+.tag{opacity:0;transform:translateY(8px) scale(.9);transition:opacity .5s,transform .5s cubic-bezier(.3,1.6,.5,1),background .3s}
+.in .tag{opacity:1;transform:none}
+.in .tag:nth-child(2){transition-delay:.12s}.in .tag:nth-child(3){transition-delay:.24s}
+.tag:hover{background:rgba(79,209,255,.18)}
+.skill .ico,.cert .ico,.ct .ico{animation:bob 4s ease-in-out infinite}
+.cards>*:nth-child(2n) .ico{animation-delay:-1.3s}.cards>*:nth-child(3n) .ico{animation-delay:-2.6s}
+@keyframes bob{50%{translate:0 -5px}}
+.cert:hover .ico,.ct:hover .ico{transform:scale(1.2) rotate(-6deg)}
+.ico{transition:transform .4s}
+.fact b{transition:color .3s}.fact:hover b{color:var(--a)}
+.logo{transition:letter-spacing .4s}.logo:hover{letter-spacing:.12em}
+.cur.click{transform-origin:center;animation:cclick .5s}
+@keyframes cclick{50%{box-shadow:0 0 0 12px rgba(79,209,255,.15)}}
+/* responsive */
+@media(max-width:860px){
+#home{grid-template-columns:1fr;text-align:center;padding-top:110px;gap:36px}
+#home .pic{order:-1}.intro{margin-inline:auto}.cta{justify-content:center}.scroll{display:none}
+.about{grid-template-columns:1fr}
+.burger{display:block}
+.links{position:fixed;top:68px;left:0;right:0;flex-direction:column;gap:0;padding:10px 24px 22px;background:rgba(7,11,20,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .4s}
+.links.open{transform:none}.links a{display:block;padding:12px 0}
+section{padding:80px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+.rv{opacity:1;transform:none}.pg b{width:var(--w)}
+}
+</style>
 </head>
-
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="orb o1" aria-hidden="true"></div><div class="orb o2" aria-hidden="true"></div>
+<div class="grid" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>
+<div class="cur" aria-hidden="true"></div><div class="dot" aria-hidden="true"></div>
 
-    <!-- Navigation -->
-    <header>
-        <nav>
-            <h2 class="logo">MATHI</h2>
+<nav>
+  <a href="#home" class="logo">MATHI<span>.</span></a>
+  <ul class="links" id="links">
+    <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li><li><a href="#projects">Projects</a></li><li><a href="#certifications">Certifications</a></li>
+    <li><a href="#resume">Resume</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="links"><i></i><i></i><i></i></button>
+  <span class="bar" id="bar"></span>
+</nav>
 
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-            </ul>
-        </nav>
-    </header>
-
-
-<!-- Home -->
-<section id="home" class="home">
-
-    <!-- Animated Background -->
-    <canvas id="particleCanvas"></canvas>
-
-    <!-- Background overlay -->
-    <div class="home-overlay"></div>
-
-    <!-- Home Content -->
-    <div class="home-container">
-
-        <div class="home-content">
-
-            <p class="welcome">WELCOME TO MY PORTFOLIO</p>
-
-            <h1>
-                <span>MATHI SRIMURTHINADH</span>
-            </h1>
-
-            <h2>AI & ML Student | Python Developer</h2>
-
-            <p class="intro">
-                I am passionate about Artificial Intelligence,
-                Machine Learning, Python and Data Analytics.
-                I enjoy learning new technologies and building
-                real-world solutions.
-            </p>
-
-            <div class="home-buttons">
-
-                <a href="#projects" class="button">
-                    View My Projects
-                </a>
-
-                <a href="#contact" class="button second-button">
-                    Contact Me
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- Profile -->
-        <div class="profile-card">
-
-            <div class="profile-circle">
-                <img src="profile.jpg" alt="Mathi Srimurthinadh">
-            </div>
-
-            <h3>Mathi Srimurthinadh</h3>
-
-            <p>AI & Machine Learning Student</p>
-
-        </div>
-
+<main>
+<section id="home">
+  <div>
+    <p class="hi rv">Welcome to my portfolio</p>
+    <h1 class="rv" style="--d:.1s"><span class="grad">Mathi Srimurthinadh</span></h1>
+    <p class="role rv" style="--d:.2s" id="role" aria-label="AI & ML Student, Python Developer, Web Developer, Aspiring Software Engineer"></p>
+    <p class="intro rv" style="--d:.3s">I am passionate about Artificial Intelligence, Machine Learning, Python and Data Analytics. I enjoy learning new technologies and building real-world solutions.</p>
+    <div class="cta rv" style="--d:.4s">
+      <a href="#projects" class="btn p mag">View My Projects</a>
+      <a href="#contact" class="btn mag">Contact Me</a>
     </div>
-
-</section>
-<!-- Animated Background for pages after Home -->
-<canvas id="globalCanvas"></canvas>
-
-  <!-- About -->
-<section id="about" class="about">
-
-    <!-- Animated Background -->
-    <canvas id="aboutCanvas"></canvas>
-
-    <!-- Overlay -->
-    <div class="about-overlay"></div>
-
-    <!-- Content -->
-    <div class="about-content">
-
-        <div class="section-title">
-            <p>GET TO KNOW ME</p>
-            <h2>About Me</h2>
-        </div>
-
-        <div class="about-container">
-
-            <div class="about-text">
-                <h3>AI & Machine Learning Student</h3>
-
-                <p>
-                    I am pursuing B.Tech in Artificial Intelligence
-                    and Machine Learning at Usha Rama College of
-                    Engineering and Technology.
-                </p>
-
-                <p>
-                    I am interested in Python programming,
-                    Artificial Intelligence, Machine Learning
-                    and Data Analytics.
-                </p>
-
-                <p>
-                    I enjoy learning new technologies and developing
-                    practical solutions to real-world problems.
-                </p>
-            </div>
-
-            <div class="about-info">
-
-                <div class="info-box">
-                    <h4>Education</h4>
-                    <p>B.Tech - AI & ML</p>
-                </div>
-
-                <div class="info-box">
-                    <h4>Location</h4>
-                    <p>Andhra Pradesh, India</p>
-                </div>
-
-                <div class="info-box">
-                    <h4>Focus</h4>
-                    <p>Python & AI/ML</p>
-                </div>
-
-                <div class="info-box">
-                    <h4>Goal</h4>
-                    <p>Software / AI Career</p>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
+  </div>
+  <div class="pic rv" style="--d:.3s"><div class="frame" id="frame"><img src="profile.jpg" onerror="this.onerror=null;this.src='https://mathimunni2005-cell.github.io/My_Portfolio/profile.jpg'" alt="Mathi Srimurthinadh" width="720" height="720" fetchpriority="high"></div></div>
+  <span class="scroll" aria-hidden="true"></span>
 </section>
 
-
-    <!-- Education -->
-    <section id="education">
-
-        <h2>Education</h2>
-
-        <div class="education-card">
-
-            <h3>B.Tech - Artificial Intelligence and Machine Learning</h3>
-            <p>Usha Rama College of Engineering and Technology</p>
-            <p>JNTUK | 2027 | 68%</p>
-
-        </div>
-
-        <div class="education-card">
-
-            <h3>Intermediate</h3>
-            <p>Narayana Junior College</p>
-            <p>State Board | 2023 | 73.2%</p>
-
-        </div>
-
-        <div class="education-card">
-
-            <h3>10th Class</h3>
-            <p>Narayana English Medium School</p>
-            <p>State Board | 2022 | 100%</p>
-
-        </div>
-
-    </section>
-
-
-   <!-- Skills -->
-<section id="skills" class="skills">
-
-    <div class="section-title">
-        <p>MY TECHNICAL ABILITIES</p>
-        <h2>Skills</h2>
+<section id="about">
+  <div class="head rv"><h2>About me</h2></div>
+  <div class="about">
+    <div class="rv">
+      <h3 style="font-size:1.4rem;margin-bottom:16px">AI & Machine Learning Student</h3>
+      <p>I am pursuing B.Tech in Artificial Intelligence and Machine Learning at Usha Rama College of Engineering and Technology.</p>
+      <p>I am interested in Python programming, Artificial Intelligence, Machine Learning and Data Analytics.</p>
+      <p>I enjoy learning new technologies and developing practical solutions to real-world problems.</p>
     </div>
-
-    <div class="skills-container">
-
-        <div class="skill-card">
-            <div class="skill-icon">🐍</div>
-            <h3>Python</h3>
-            <p>Programming & Problem Solving</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">🌐</div>
-            <h3>HTML</h3>
-            <p>Web Page Structure</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">🎨</div>
-            <h3>CSS</h3>
-            <p>Basic Web Styling</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">⚡</div>
-            <h3>JavaScript</h3>
-            <p>Basic Web Interactivity</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">🗄️</div>
-            <h3>SQL</h3>
-            <p>Basic Database Queries</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">📊</div>
-            <h3>Excel</h3>
-            <p>Data Handling & Analysis</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">💻</div>
-            <h3>VS Code</h3>
-            <p>Development Environment</p>
-        </div>
-
-        <div class="skill-card">
-            <div class="skill-icon">🔗</div>
-            <h3>GitHub</h3>
-            <p>Code Management</p>
-        </div>
-
+    <div class="facts">
+      <div class="glass fact rv"><small>Education</small><b>B.Tech - AI & ML</b></div>
+      <div class="glass fact rv" style="--d:.1s"><small>Location</small><b>Andhra Pradesh, India</b></div>
+      <div class="glass fact rv" style="--d:.2s"><small>Focus</small><b>Python & AI/ML</b></div>
+      <div class="glass fact rv" style="--d:.3s"><small>Goal</small><b>Software / AI Career</b></div>
     </div>
-
+  </div>
 </section>
 
-
-    <!-- Projects -->
-    <!-- Projects -->
-<section id="projects" class="projects">
-
-    <div class="section-title">
-        <p>MY WORK</p>
-        <h2>Projects</h2>
-    </div>
-
-    <div class="projects-container">
-
-        <!-- Project 1 -->
-        <div class="project-card">
-
-            <div class="project-top">
-                <span class="project-number">01</span>
-                <span class="project-type">AI / ML</span>
-            </div>
-
-            <h3>Crop Recommendation System</h3>
-
-            <p>
-                An AI and Machine Learning based system that recommends
-                suitable crops based on agricultural and environmental
-                conditions such as soil and weather parameters.
-            </p>
-
-            <div class="project-tech">
-                <span>Python</span>
-                <span>Machine Learning</span>
-                <span>Data Analysis</span>
-            </div>
-
-            <div class="project-buttons">
-
-                <a href="https://github.com/mathimunni2005-cell" target="_blank" class="project-btn">GitHub</a>
-
-                
-
-            </div>
-
-        </div>
-
-
-        <!-- Project 2 -->
-        <div class="project-card">
-
-            <div class="project-top">
-                <span class="project-number">02</span>
-                <span class="project-type">Python</span>
-            </div>
-
-            <h3>Python Programming Projects</h3>
-
-            <p>
-                A collection of Python programming exercises and
-                applications developed while learning programming,
-                problem solving, functions, data structures and
-                algorithms.
-            </p>
-
-            <div class="project-tech">
-                <span>Python</span>
-                <span>Problem Solving</span>
-                <span>Algorithms</span>
-            </div>
-
-            <div class="project-buttons">
-
-               <a href="https://github.com/mathimunni2005-cell"
-                        target="_blank"
-                     class="project-btn">
-                 GitHub
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- Project 3 -->
-        <div class="project-card">
-
-            <div class="project-top">
-                <span class="project-number">03</span>
-                <span class="project-type">Web</span>
-            </div>
-
-            <h3>Personal Portfolio</h3>
-
-            <p>
-                A responsive personal portfolio website created to
-                showcase my education, technical skills, projects,
-                certifications and professional profile.
-            </p>
-
-            <div class="project-tech">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>JavaScript</span>
-            </div>
-
-            <div class="project-buttons">
-
-               <a href="https://github.com/mathimunni2005-cell"
-                        target="_blank"
-                        class="project-btn">
-                    GitHub
-                </a>
-
-               
-            </div>
-
-        </div>
-
-    </div>
-
-</section>  
-
-       <!-- Certifications -->
-<section id="certifications" class="certifications">
-
-    <div class="section-title">
-        <p>MY ACHIEVEMENTS</p>
-        <h2>Certifications</h2>
-    </div>
-
-    <div class="certifications-container">
-
-        <!-- Certificate 1 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">🏆</div>
-            <h3>Data Engineering Virtual Internship</h3>
-            <p>National Internship Portal</p>
-            <a href="certificate1.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 2 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">☁️</div>
-            <h3>Cloud Virtual Internship</h3>
-            <p>National Internship Portal</p>
-            <a href="certificate2.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 3 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">🔐</div>
-            <h3>Cybersecurity Virtual Internship</h3>
-            <p>National Internship Portal</p>
-            <a href="certificate3.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 4 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">🛡️</div>
-            <h3>Zero Trust Cloud Security Virtual Internship</h3>
-            <p>Zscaler</p>
-            <a href="certificate4.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 5 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">🤖</div>
-            <h3>Intelligent AI Development</h3>
-            <p>Academy of Tech Masters</p>
-            <a href="certificate5.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 6 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">🧠</div>
-            <h3>AI & ML Virtual Internship</h3>
-            <p>National Internship Portal</p>
-            <a href="certificate6.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-         <!-- Certificate 7 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">🔒</div>
-            <h3>Fundamentals of Cybersecurity</h3>
-            <p>Zscaler Training</p>
-            <a href="certificate7.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 8 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">☁️</div>
-            <h3>AWS Compute Services Overview</h3>
-            <p>AWS Training & Certification</p>
-            <a href="certificate8.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-
-        <!-- Certificate 9 -->
-        <div class="certificate-card">
-            <div class="certificate-icon">☁️</div>
-            <h3>AWS Cloud Practitioner Essentials</h3>
-            <p>AWS Training & Certification</p>
-            <a href="certificate9.pdf" target="_blank"
-               class="certificate-button">
-                View Certificate
-            </a>
-        </div>
-    </div>
-
+<section id="education">
+  <div class="head rv"><h2>Education</h2></div>
+  <div class="tl" id="tl"><i id="tlp"></i>
+    <div class="glass step rv"><h3>B.Tech - Artificial Intelligence and Machine Learning</h3><p>Usha Rama College of Engineering and Technology</p><div class="meta"><span class="tag">JNTUK</span><span class="tag">2027</span><span class="tag">68%</span></div></div>
+    <div class="glass step rv"><h3>Intermediate</h3><p>Narayana Junior College</p><div class="meta"><span class="tag">State Board</span><span class="tag">2023</span><span class="tag">73.2%</span></div></div>
+    <div class="glass step rv"><h3>10th Class</h3><p>Narayana English Medium School</p><div class="meta"><span class="tag">State Board</span><span class="tag">2022</span><span class="tag">100%</span></div></div>
+  </div>
 </section>
 
-       <!-- Resume -->
-    <section id="resume" class="resume">
-
-        <div class="section-title">
-            <p>MY PROFESSIONAL PROFILE</p>
-            <h2>Resume</h2>
-        </div>
-
-        <div class="resume-container">
-
-            <div class="resume-card">
-
-                <div class="resume-icon">📄</div>
-
-                    <h3>My Resume</h3>
-
-                    <p>
-                        View or download my resume to learn more about my
-                        education, technical skills, projects, certifications
-                        and career interests.
-                    </p>
-
-                    <div class="resume-buttons">
-
-                        <a href="resume.pdf"
-                        target="_blank"
-                        class="resume-button">
-                            View Resume
-                        </a>
-
-                        <a href="resume.pdf"
-                        download
-                        class="resume-button download-button">
-                            Download Resume
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-       </div>
-
-    </section>
-
-</section>
-<!-- Contact -->
-<section id="contact" class="contact">
-
-    <div class="section-title">
-        <p>GET IN TOUCH</p>
-        <h2>Contact Me</h2>
-    </div>
-
-    <div class="contact-center">
-
-        <h3>Let's Connect</h3>
-
-        <p class="contact-description">
-            I am open to opportunities, internships and collaborations
-            in Python, AI/ML, software development and data analytics.
-        </p>
-
-        <div class="contact-details">
-
-            <!-- Email -->
-            <div class="contact-item">
-                <div class="contact-icon">📧</div>
-                <div>
-                    <h4>Email</h4>
-                    <a href="mailto:mathi.munni2005@gmail.com">
-                        mathi.munni2005@gmail.com
-                    </a>
-                </div>
-            </div>
-
-            <!-- LinkedIn -->
-            <div class="contact-item">
-                <div class="contact-icon">💼</div>
-                <div>
-                    <h4>LinkedIn</h4>
-                    <a href="https://linkedin.com/in/srimurthinadh-mathi-41bb07358"
-                       target="_blank">
-                        https://linkedin.com/in/srimurthinadh-mathi-41bb07358
-                    </a>
-                </div>
-            </div>
-
-            <!-- GitHub -->
-            <div class="contact-item">
-                <div class="contact-icon">🐙</div>
-                <div>
-                    <h4>GitHub</h4>
-                    <a href="https://github.com/mathimunni2005-cell"
-                       target="_blank">
-                        https://github.com/mathimunni2005-cell
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <p class="contact-message">
-            Thank you for visiting my portfolio!
-        </p>
-
-    </div>
-
+<section id="skills">
+  <div class="head rv"><h2>Skills</h2><p>My technical abilities. The bars show how comfortable I am with each one.</p></div>
+  <!-- Adjust --w on each card to match your own comfort level -->
+  <div class="cards" id="skillCards">
+    <div class="glass skill rv" style="--w:80%"><span class="ico">🐍</span><h3>Python</h3><p>Programming & Problem Solving</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:65%"><span class="ico">🌐</span><h3>HTML</h3><p>Web Page Structure</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:55%"><span class="ico">🎨</span><h3>CSS</h3><p>Basic Web Styling</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:50%"><span class="ico">⚡</span><h3>JavaScript</h3><p>Basic Web Interactivity</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:50%"><span class="ico">🗄️</span><h3>SQL</h3><p>Basic Database Queries</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:65%"><span class="ico">📊</span><h3>Excel</h3><p>Data Handling & Analysis</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:75%"><span class="ico">💻</span><h3>VS Code</h3><p>Development Environment</p><div class="pg"><b></b></div></div>
+    <div class="glass skill rv" style="--w:65%"><span class="ico">🔗</span><h3>GitHub</h3><p>Code Management</p><div class="pg"><b></b></div></div>
+  </div>
 </section>
 
-    <!-- Footer -->
-    <!-- Footer -->
-<footer class="footer">
+<section id="projects">
+  <div class="head rv"><h2>Projects</h2></div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(290px,1fr))">
+    <article class="glass proj tilt rv"><div class="vis"><div>AI / ML</div></div><div class="pb"><h3>Crop Recommendation System</h3><p>An AI and Machine Learning based system that recommends suitable crops based on agricultural and environmental conditions such as soil and weather parameters.</p><div class="meta"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag">Data Analysis</span></div><a class="btn mag" href="https://github.com/mathimunni2005-cell" target="_blank" rel="noopener">GitHub</a></div></article>
+    <article class="glass proj tilt rv" style="--d:.1s"><div class="vis"><div>Python</div></div><div class="pb"><h3>Python Programming Projects</h3><p>A collection of Python programming exercises and applications developed while learning programming, problem solving, functions, data structures and algorithms.</p><div class="meta"><span class="tag">Python</span><span class="tag">Problem Solving</span><span class="tag">Algorithms</span></div><a class="btn mag" href="https://github.com/mathimunni2005-cell" target="_blank" rel="noopener">GitHub</a></div></article>
+    <article class="glass proj tilt rv" style="--d:.2s"><div class="vis"><div>Web</div></div><div class="pb"><h3>Personal Portfolio</h3><p>A responsive personal portfolio website created to showcase my education, technical skills, projects, certifications and professional profile.</p><div class="meta"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div><a class="btn mag" href="https://github.com/mathimunni2005-cell" target="_blank" rel="noopener">GitHub</a></div></article>
+  </div>
+</section>
 
-    <div class="footer-content">
+<section id="certifications">
+  <div class="head rv"><h2>Certifications</h2></div>
+  <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(270px,1fr))">
+    <div class="glass cert rv"><span class="ico">🏆</span><h3>Data Engineering Virtual Internship</h3><p>National Internship Portal</p><a class="btn mag" href="certificate1.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv" style="--d:.08s"><span class="ico">☁️</span><h3>Cloud Virtual Internship</h3><p>National Internship Portal</p><a class="btn mag" href="certificate2.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv" style="--d:.16s"><span class="ico">🔐</span><h3>Cybersecurity Virtual Internship</h3><p>National Internship Portal</p><a class="btn mag" href="certificate3.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv"><span class="ico">🛡️</span><h3>Zero Trust Cloud Security Virtual Internship</h3><p>Zscaler</p><a class="btn mag" href="certificate4.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv" style="--d:.08s"><span class="ico">🤖</span><h3>Intelligent AI Development</h3><p>Academy of Tech Masters</p><a class="btn mag" href="certificate5.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv" style="--d:.16s"><span class="ico">🧠</span><h3>AI & ML Virtual Internship</h3><p>National Internship Portal</p><a class="btn mag" href="certificate6.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv"><span class="ico">🔒</span><h3>Fundamentals of Cybersecurity</h3><p>Zscaler Training</p><a class="btn mag" href="certificate7.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv" style="--d:.08s"><span class="ico">☁️</span><h3>AWS Compute Services Overview</h3><p>AWS Training & Certification</p><a class="btn mag" href="certificate8.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+    <div class="glass cert rv" style="--d:.16s"><span class="ico">☁️</span><h3>AWS Cloud Practitioner Essentials</h3><p>AWS Training & Certification</p><a class="btn mag" href="certificate9.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+  </div>
+</section>
 
-        <h3>Mathi Srimurthinadh</h3>
+<section id="resume">
+  <div class="glass res rv">
+    <span class="ico">📄</span><h3>My Resume</h3>
+    <p>View or download my resume to learn more about my education, technical skills, projects, certifications and career interests.</p>
+    <div class="cta"><a class="btn p mag" href="resume.pdf" target="_blank" rel="noopener">View Resume</a><a class="btn mag" href="resume.pdf" download>Download Resume</a></div>
+  </div>
+</section>
 
-        <p>
-            AI & Machine Learning Student | Python Developer
-        </p>
+<section id="contact">
+  <div class="head rv"><h2>Let’s connect</h2><p>I am open to opportunities, internships and collaborations in Python, AI/ML, software development and data analytics.</p></div>
+  <div class="cc">
+    <a class="glass ct tilt rv" href="mailto:mathi.munni2005@gmail.com"><span class="ico">📧</span><h3>Email</h3><span>mathi.munni2005@gmail.com</span></a>
+    <a class="glass ct tilt rv" style="--d:.1s" href="https://linkedin.com/in/srimurthinadh-mathi-41bb07358" target="_blank" rel="noopener"><span class="ico">💼</span><h3>LinkedIn</h3><span>linkedin.com/in/srimurthinadh-mathi-41bb07358</span></a>
+    <a class="glass ct tilt rv" style="--d:.2s" href="https://github.com/mathimunni2005-cell" target="_blank" rel="noopener"><span class="ico">🐙</span><h3>GitHub</h3><span>github.com/mathimunni2005-cell</span></a>
+  </div>
+  <p class="thanks rv">Thank you for visiting my portfolio!</p>
+</section>
+</main>
 
-        <div class="footer-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#certifications">Certifications</a>
-            <a href="#resume">Resume</a>
-            <a href="#contact">Contact</a>
-        </div>
-
-        <div class="footer-social">
-            <a href="https://linkedin.com/in/srimurthinadh-mathi-41bb07358"
-               target="_blank">
-                LinkedIn
-            </a>
-
-            <a href="https://github.com/mathimunni2005-cell"
-               target="_blank">
-                GitHub
-            </a>
-        </div>
-
-        <p class="copyright">
-            © 2026 Mathi Srimurthinadh. All Rights Reserved.
-        </p>
-
-    </div>
-
+<footer>
+  <h3>Mathi Srimurthinadh</h3>
+  <p>AI & Machine Learning Student | Python Developer</p>
+  <div class="fl"><a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#certifications">Certifications</a><a href="#resume">Resume</a><a href="#contact">Contact</a></div>
+  <div class="fl"><a href="https://linkedin.com/in/srimurthinadh-mathi-41bb07358" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/mathimunni2005-cell" target="_blank" rel="noopener">GitHub</a></div>
+  <p>© 2026 Mathi Srimurthinadh. All Rights Reserved.</p>
 </footer>
 
-    <script src="script.js"></script>
+<script>
+(()=>{
+const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+addEventListener('load',()=>document.body.classList.add('ready'));
+setTimeout(()=>document.body.classList.add('ready'),1200);
 
+/* scroll reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+$$('.rv').forEach(el=>io.observe(el));
+
+/* typing */
+const roles=['AI & ML Student','Python Developer','Web Developer','Aspiring Software Engineer'],rt=$('#role');
+if(reduce){rt.textContent=roles.join(' | ')}else{
+let i=0,j=0,del=false;
+(function type(){
+ const w=roles[i];j+=del?-1:1;rt.textContent=w.slice(0,j);
+ let t=del?35:75;
+ if(!del&&j===w.length){del=true;t=1600}else if(del&&j===0){del=false;i=(i+1)%roles.length;t=350}
+ setTimeout(type,t);
+})();}
+
+/* nav: active link, progress bar, mobile menu */
+const links=$$('.links a'),secs=$$('main section'),bar=$('#bar'),tl=$('#tl'),tlp=$('#tlp');
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s=>so.observe(s));
+const burger=$('#burger'),menu=$('#links');
+const toggle=o=>{menu.classList.toggle('open',o);burger.classList.toggle('x',o);burger.setAttribute('aria-expanded',o)};
+burger.onclick=()=>toggle(!menu.classList.contains('open'));
+links.forEach(a=>a.addEventListener('click',()=>toggle(false)));
+
+/* scroll-linked: progress, timeline, parallax */
+const orbs=$$('.orb');let tick=false;
+function onScroll(){
+ const h=document.documentElement.scrollHeight-innerHeight;
+ bar.style.width=(scrollY/h*100)+'%';
+ const r=tl.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.65-r.top)/r.height));
+ tlp.style.height=(p*100)+'%';
+ if(!reduce)orbs.forEach((o,k)=>o.style.translate='0 '+(scrollY*(k?-.06:.08))+'px');
+ tick=false;
+}
+addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+
+/* pointer effects */
+const root=document.documentElement.style;
+if(fine&&!reduce){
+ const cur=$('.cur'),dot=$('.dot');let cx=0,cy=0,tx=0,ty=0;
+ document.body.classList.add('has-cur');
+ addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;dot.style.transform=`translate(${tx}px,${ty}px)`;root.setProperty('--mx',tx+'px');root.setProperty('--my',ty+'px')},{passive:true});
+ (function loop(){cx+=(tx-cx)*.18;cy+=(ty-cy)*.18;cur.style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(loop)})();
+ $$('a,button').forEach(el=>{el.addEventListener('pointerenter',()=>cur.classList.add('big'));el.addEventListener('pointerleave',()=>cur.classList.remove('big'))});
+ /* magnetic buttons */
+ $$('.mag').forEach(b=>{
+  b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`});
+  b.addEventListener('pointerleave',()=>{b.style.transform=''});
+ });
+ /* 3D tilt */
+ $$('.tilt').forEach(c=>{
+  c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transition='border-color .35s,box-shadow .35s';c.style.transform=`perspective(900px) rotateX(${-y*9}deg) rotateY(${x*9}deg) translateZ(0)`});
+  c.addEventListener('pointerleave',()=>{c.style.transition='';c.style.transform=''});
+ });
+ /* hero image tilt */
+ const fr=$('#frame');
+ addEventListener('pointermove',e=>{if(scrollY>innerHeight)return;fr.style.transform=`rotateY(${(e.clientX/innerWidth-.5)*14}deg) rotateX(${-(e.clientY/innerHeight-.5)*10}deg)`},{passive:true});
+}
+
+
+/* button ripple + card light */
+$$('.btn').forEach(b=>b.addEventListener('pointerdown',e=>{const r=b.getBoundingClientRect(),d=document.createElement('span');d.className='rip';d.style.left=(e.clientX-r.left)+'px';d.style.top=(e.clientY-r.top)+'px';b.appendChild(d);setTimeout(()=>d.remove(),700)}));
+if(fine)$$('.glass').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--px',(e.clientX-r.left)+'px');c.style.setProperty('--py',(e.clientY-r.top)+'px')}));
+$$('.head').forEach(h=>io.observe(h));
+
+/* particle background (lightweight 2D canvas) */
+if(!reduce){
+ const cv=$('#bg'),ctx=cv.getContext('2d');let W,H,ps=[],mx=-999,my=-999,run=true;
+ const dpr=Math.min(devicePixelRatio||1,2);
+ function size(){W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  const n=Math.round(Math.min(90,Math.max(28,W*H/17000)));
+  ps=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*.8+.2,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25}))}
+ size();addEventListener('resize',size);
+ addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
+ document.addEventListener('visibilitychange',()=>{run=!document.hidden;if(run)draw()});
+ function draw(){
+  if(!run)return;ctx.clearRect(0,0,W,H);
+  for(const p of ps){
+   p.x+=p.vx*p.z;p.y+=p.vy*p.z;
+   if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+   const dx=p.x-mx,dy=p.y-my,d=dx*dx+dy*dy;
+   if(d<14000){const f=(1-d/14000)*.6;p.x+=dx*f*.02;p.y+=dy*f*.02}
+   ctx.beginPath();ctx.arc(p.x,p.y,p.z*1.8,0,6.283);ctx.fillStyle=`rgba(120,200,255,${.25+p.z*.5})`;ctx.shadowColor='#4fd1ff';ctx.shadowBlur=8*p.z;ctx.fill();
+  }
+  ctx.shadowBlur=0;
+  for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){
+   const a=ps[i],b=ps[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
+   if(d<13000){ctx.strokeStyle=`rgba(139,123,255,${(1-d/13000)*.22})`;ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
+  }
+  requestAnimationFrame(draw);
+ }
+ draw();
+}
+})();
+</script>
 </body>
-
 </html>
